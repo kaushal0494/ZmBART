@@ -1,5 +1,6 @@
-PRETRAIN=../checkpoint/checkpoint_ZmBART.pt
+export CUDA_VISIBLE_DEVICES=4,5,6,7
 #PRETRAIN=../mbart.cc25/model.pt
+PRETRAIN=../checkpoint/checkpoint_ZmBART.pt
 langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
 SRC=en_XX
 TGT=hi_IN
@@ -28,15 +29,14 @@ python -u train.py ${DATADIR} \
 --dropout 0.3 \
 --attention-dropout 0.1  \
 --weight-decay 0.0 \
---max-tokens 1024 \
+--max-tokens 2048 \
 --update-freq 2 \
---save-interval 100 \
---save-interval-updates 20000 \
+--save-interval 1 \
+--save-interval-updates 50000 \
 --keep-interval-updates 10 \
---no-epoch-checkpoints \
 --seed 222 \
 --log-format simple \
---log-interval 10 \
+--log-interval 100 \
 --reset-optimizer \
 --reset-meters \
 --reset-dataloader \
@@ -48,3 +48,4 @@ python -u train.py ${DATADIR} \
 --save-dir ${SAVEDIR} \
 --fp16 \
 --skip-invalid-size-inputs-valid-test \
+--no-epoch-checkpoints \
