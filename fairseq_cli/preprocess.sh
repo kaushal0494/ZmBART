@@ -1,7 +1,7 @@
 DATA=../dataset/preprocess/NHG
-TRAIN=train_enhi
-VALID=valid_enhi
-TEST=test_enhi
+TRAIN=nhg_en_train
+VALID=nhg_en_valid
+TEST=nhg_ja_test
 SRC=en_XX
 TGT=hi_IN
 NAME=en-hi
@@ -21,4 +21,3 @@ python -u preprocess.py \
 --tgtdict ${DICT} \
 --workers 70 \
 --fp16
-
