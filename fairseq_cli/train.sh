@@ -1,11 +1,10 @@
-#PRETRAIN=../checkpoint/checkpoint_last.pt
+PRETRAIN=../checkpoint/checkpoint_ZmBART.pt
 #PRETRAIN=../mbart.cc25/model.pt
-PRETRAIN=../checkpoint/checkpoint_MNMT_TS_best.pt
 langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
 SRC=en_XX
 TGT=hi_IN
 NAME=en-hi
-DATADIR=../dataset/postprocess/TS/en-hi
+DATADIR=../dataset/postprocess/NHG/en-hi
 SAVEDIR=../checkpoint
 
 python -u train.py ${DATADIR} \
