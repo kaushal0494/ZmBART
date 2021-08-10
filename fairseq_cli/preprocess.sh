@@ -1,11 +1,11 @@
-DATA=../dataset/preprocess/MT
+DATA=../dataset/preprocess/NHG
 TRAIN=train_enhi
 VALID=valid_enhi
 TEST=test_enhi
 SRC=en_XX
 TGT=hi_IN
 NAME=en-hi
-DEST=../dataset/postprocess/MT
+DEST=../dataset/postprocess/NHG
 DICT=../mbart.cc25/dict.txt
 
 python -u preprocess.py \
