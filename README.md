@@ -3,7 +3,7 @@
 
 ## About
 This repository is source code of paper [ZmBART: An Unsupervised Cross-lingual Transfer Framework for
-Language Generation](https://arxiv.org/pdf/2106.01597.pdf) which is accepted in findings of *Association of Computational Linguistics (ACL 2021)*. For the implementation we modified the awesome [fairseq](https://github.com/pytorch/fairseq) libaray.  
+Language Generation](https://aclanthology.org/2021.findings-acl.248/) which is accepted in findings of *Association of Computational Linguistics (ACL 2021)*. For the implementation we modified the awesome [fairseq](https://github.com/pytorch/fairseq) libaray.  
 
 All the downloads are available over this link: https://drive.google.com/drive/folders/14DrrxlXJNiXf_266kmcR9KIY9u_28QYW?usp=sharing
 
@@ -340,4 +340,25 @@ bert-score -r $PREDICTIONS_DIR/hindi_ref.txt -c $PREDICTIONS_DIR/hindi_hyp.txt -
 #sacrebleu -tok 'none' -s 'none' $PREDICTIONS_DIR/japanese_ref.txt < $PREDICTIONS_DIR/japanese_hyp.txt
 #python rouge_test.py $PREDICTIONS_DIR/japanese_hyp.txt $PREDICTIONS_DIR/japanese_ref.txt
 #bert-score -r $PREDICTIONS_DIR/japanese_ref.txt -c $PREDICTIONS_DIR/japanese_hyp.txt --lang ja
+```
+# License
+
+# Citation
+Please cite as:
+```
+@inproceedings{maurya-etal-2021-zmbart,
+    title = "{Z}m{BART}: An Unsupervised Cross-lingual Transfer Framework for Language Generation",
+    author = "Maurya, Kaushal Kumar  and
+      Desarkar, Maunendra Sankar  and
+      Kano, Yoshinobu  and
+      Deepshikha, Kumari",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL-IJCNLP 2021",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.findings-acl.248",
+    doi = "10.18653/v1/2021.findings-acl.248",
+    pages = "2804--2818",
+}
 ```
