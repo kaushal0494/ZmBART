@@ -65,7 +65,16 @@ def main(args):
     # Build model and criterion
     model = task.build_model(args)
     criterion = task.build_criterion(args)
-    #logger.info(model)
+    logger.info(model)
+ 
+    for param in model.encoder.embed_tokens.parameters():   #freezing encoder Embeddings
+        param.requires_grad = False
+    for param in model.decoder.embed_tokens.parameters():   #freezing decoder Embeddings
+        param.requires_grad = False 
+    for i, dec_layer in enumerate(model.decoder.layers):    #freezing decoder layers
+           for dec_param in dec_layer.parameters():
+                dec_param.requires_grad = False   
+    
     logger.info(
         "model {}, criterion {}".format(args.arch, criterion.__class__.__name__)
     )
