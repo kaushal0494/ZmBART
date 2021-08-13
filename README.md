@@ -8,7 +8,7 @@ Language Generation](https://aclanthology.org/2021.findings-acl.248/) which is a
 All the downloads are available over this link: https://drive.google.com/drive/folders/14DrrxlXJNiXf_266kmcR9KIY9u_28QYW?usp=sharing
 
 ## Installation Instruction
-All the dependencies with the conda environment can be installed with the below command.
+All the dependencies can be installed with the below conda command.
 
 ``` 
 conda env create --file environment.yml
