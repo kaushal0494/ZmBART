@@ -5,7 +5,7 @@
 This repository is the source code of the paper [ZmBART: An Unsupervised Cross-lingual Transfer Framework for
 Language Generation](https://aclanthology.org/2021.findings-acl.248/) which is accepted in findings of *Association of Computational Linguistics (ACL 2021)*. For the implementation, we modified the awesome [fairseq](https://github.com/pytorch/fairseq) library.  
 
-All the downloads are available over this link: https://drive.google.com/drive/folders/14DrrxlXJNiXf_266kmcR9KIY9u_28QYW?usp=sharing
+All the downloads are available over this link:https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE
 
 ## Installation Instruction
 All the dependencies can be installed with the below conda command.
