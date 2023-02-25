@@ -20,14 +20,14 @@ Install the sentence-piece (SPM) from [here](https://github.com/google/sentencep
 
 ## Downloads
 
-- Download the ZmBART chekpoint from [here](https://drive.google.com/drive/folders/1k9Usn2vc7C4SOndJ_9vjYMUEqqyLVttn?usp=sharing) and extract at ```ZmBART/checkpoints/``` location
+- Download the ZmBART chekpoint from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE) and extract at ```ZmBART/checkpoints/``` location
 - Also, download mBART.CC25 checkpoint and extract to ```ZmBART/``` by using below commands
 ```
 wget https://dl.fbaipublicfiles.com/fairseq/models/mbart/mbart.CC25.tar.gz
 tar -xzvf mbart.CC25.tar.gz
 ```
-- The raw training, validation and evaluation dataset for English, Hindi, and Japanese can be downloaded from [here](https://drive.google.com/drive/folders/1tW8BmYIa9U1KOjIIaT5VX3UUIowHoCiA?usp=sharing). The model will need an SPM tokenized dataset as input. The raw dataset should be converted into SPM token dataset with instruction provided [here](https://github.com/pytorch/fairseq/blob/master/examples/mbart/README.md#bpe-data-1), and [here](https://tmramalho.github.io/science/2020/06/10/fine-tune-neural-translation-models-with-mBART/) or can be directly downloaded in next point pre-processed by us.  
-- The SPM tokenized training, validation and evaluation dataset for English, Hindi and Japanese can be downloaded from [here](https://drive.google.com/drive/folders/1tVX6VtTRadCi1bjsORw7vVSi8ygVUsao?usp=sharing).
+- The raw training, validation and evaluation dataset for English, Hindi, and Japanese can be downloaded from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE). The model will need an SPM tokenized dataset as input. The raw dataset should be converted into SPM token dataset with instruction provided [here](https://github.com/pytorch/fairseq/blob/master/examples/mbart/README.md#bpe-data-1), and [here](https://tmramalho.github.io/science/2020/06/10/fine-tune-neural-translation-models-with-mBART/) or can be directly downloaded in next point pre-processed by us.  
+- The SPM tokenized training, validation and evaluation dataset for English, Hindi and Japanese can be downloaded from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE).
 - Extract the SPM tokenized datasets at ```ZmBART/dataset/preprocess/``` 
 - Note that we added a training and validation dataset for Hindi and Japanese for few-shot training. Validation data is optional.
 - For ATS, we did joint multilingual training (see the paper for more details), so 500 monolingual datasets are augmented.
