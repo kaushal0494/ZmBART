@@ -35,13 +35,51 @@ tar -xzvf mbart.CC25.tar.gz
 - Note that we added a training and validation dataset for Hindi and Japanese for few-shot training. The validation data is optional.
 - For ATS task, we did joint multilingual training (see the paper for more details), so 500 monolingual datasets are augmented.
 
+
 ## Training and Generation
 
 ### Step-01: ZmBART Checkpoint
+To create the training dataset for the auxiliary task, use the `denoising_Script.ipynb` script. Fine-tune the mBART model with the auxiliary training dataset to obtain the ZmBART checkpoint as follows:
 
+```
+PRETRAIN=../mbart.cc25/model.pt
+langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
+SRC=en_XX
+TGT=hi_IN
+NAME=en-hi
+DATADIR=../dataset/postprocess/auxi/en-hi
+SAVEDIR=../checkpoint/checkpoint_ZmBART.pt
 
+python -u train.py ${DATADIR} \
+--arch mbart_large \
+--task translation_from_pretrained_bart \
+--source-lang ${SRC} \
+--target-lang ${TGT} \
+--criterion label_smoothed_cross_entropy \
+--label-smoothing 0.2  \
+--optimizer adam \
+--adam-eps 1e-06 \
+--lr-scheduler polynomial_decay \
+--lr 3e-05 \
+--warmup-updates 2500 \
+--max-update 100000 \
+--dropout 0.3 \
+--max-tokens 2048 \
+--update-freq 2 \
+--save-interval 1 \
+--save-interval-updates 50000 \
+--keep-interval-updates 10 \
+--seed 222 \
+--log-interval 100 \
+--restore-file $PRETRAIN \
+--langs $langs \
+--save-dir ${SAVEDIR} \
+--fp16 \
+--skip-invalid-size-inputs-valid-test \
+```
+Here, we use dummy source and target languages as en and hi. However, in our case, the source and target are the same language. All the shell scripts are available at fairseq_cli/.
 
-In rest of of this section we will show modeling pipleine  for training and generation for New headline generation (NHG) task.
+In the rest of this section, we will show the modeling pipeline to fine-tune ZmBART for the New Headline Generation (NHG) task and generate headlines in low-resource languages.
 
 
 ### Fine-Tuning ZmBART checkpoint for Zero-shot Hindi News Headline Generation
