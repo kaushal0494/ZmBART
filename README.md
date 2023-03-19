@@ -6,7 +6,7 @@
 [![others](https://img.shields.io/badge/Huggingface-Cuda%2011.1.0-brightgreen)](https://huggingface.co/)
 [![others](https://img.shields.io/badge/PyTorch-Stable%20(1.8.0)-orange)](https://pytorch.org/)
 
-## Sample Generation from ZmBART
+## Zero-shot Sample Generation from ZmBART for NHG Task 
 ![](https://github.com/kaushal0494/ZmBART/blob/main/sample1.png)
 
 ## About
