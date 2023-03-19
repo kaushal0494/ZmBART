@@ -35,9 +35,18 @@ tar -xzvf mbart.CC25.tar.gz
 - Note that we added a training and validation dataset for Hindi and Japanese for few-shot training. The validation data is optional.
 - For ATS task, we did joint multilingual training (see the paper for more details), so 500 monolingual datasets are augmented.
 
-## Fine-Tuning ZmBART checkpoint for Zero-shot Hindi News Headline Generation
-All the scripts to run pre-processing, training, and generation are available at `ZmBART/fairseq_cli/`
-### Step-01: Pre-process the data for binarization NHG English dataset
+## Training and Generation
+
+### Step-01: ZmBART Checkpoint
+
+
+
+In rest of of this section we will show modeling pipleine  for training and generation for New headline generation (NHG) task.
+
+
+### Fine-Tuning ZmBART checkpoint for Zero-shot Hindi News Headline Generation
+All the scripts to run pre-processing, training, and generation are available at `ZmBART/fairseq_cli/`. 
+### Step-01: Binarization of NHG English training data
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_en_train
