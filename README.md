@@ -322,6 +322,7 @@ bert-score -r $PREDICTIONS_DIR/hindi_ref.txt -c $PREDICTIONS_DIR/hindi_hyp.txt -
 
 ```
 # License
+This project is licensed under the MIT License. Please see fairseq's LICENSE file for more details.
 
 # Citation
 Please cite as:
