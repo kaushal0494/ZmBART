@@ -6,7 +6,7 @@
 
 ## About
 This repository contains the source code of the paper titled [ZmBART: An Unsupervised Cross-lingual Transfer Framework for
-Language Generation](https://aclanthology.org/2021.findings-acl.248/) which has been accepted in the Findings of the *Association of Computational Linguistics (ACL 2021)* conference. For the implementation, we have modified the [fairseq](https://github.com/pytorch/fairseq) library.
+Language Generation](https://aclanthology.org/2021.findings-acl.248/) which has been accepted in the Findings of the *Association of Computational Linguistics (ACL 2021)* conference. For the implementation, we have modified the [fairseq](https://github.com/pytorch/fairseq) library. If you have any questions, please feel free to create a Github issue or reach out to the first author at <cs18resch11003@iith.ac.in>.
 
 All necessary downloads are available at [this link](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE).
 
