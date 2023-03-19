@@ -6,6 +6,8 @@
 [![others](https://img.shields.io/badge/Huggingface-Cuda%2011.1.0-brightgreen)](https://huggingface.co/)
 [![others](https://img.shields.io/badge/PyTorch-Stable%20(1.8.0)-orange)](https://pytorch.org/)
 
+## Sample Generations from ZmBART
+
 ## About
 This repository contains the source code of the paper titled [ZmBART: An Unsupervised Cross-lingual Transfer Framework for
 Language Generation](https://aclanthology.org/2021.findings-acl.248/) which has been accepted in the Findings of the *Association of Computational Linguistics (ACL 2021)* conference. For the implementation, we have modified the [fairseq](https://github.com/pytorch/fairseq) library. If you have any questions, please feel free to create a Github issue or reach out to the first author at <cs18resch11003@iith.ac.in>.
