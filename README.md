@@ -77,14 +77,11 @@ python -u train.py ${DATADIR} \
 --fp16 \
 --skip-invalid-size-inputs-valid-test \
 ```
-Here, we use dummy source and target languages as en and hi. However, in our case, the source and target are the same language. All the shell scripts are available at fairseq_cli/.
+Here, we use dummy source and target languages as `en` and `hi`. However, in our case, the source and target are the same language. All the shell scripts are available at `ZmBART/fairseq_cli/`.
 
 In the rest of this section, we will show the modeling pipeline to fine-tune ZmBART for the New Headline Generation (NHG) task and generate headlines in low-resource languages.
 
-
-### Fine-Tuning ZmBART checkpoint for Zero-shot Hindi News Headline Generation
-All the scripts to run pre-processing, training, and generation are available at `ZmBART/fairseq_cli/`. 
-### Step-01: Binarization of NHG English training data
+### Step-02: Binarization of NHG English training data
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_en_train
@@ -110,9 +107,9 @@ python -u preprocess.py \
 --workers 70 \
 --fp16
 ```
-### Step-02: Training
+### Step-03: Fine-tuning of ZmBART
+
 ```
-export CUDA_VISIBLE_DEVICES=4,5,6,7
 PRETRAIN=../checkpoint/checkpoint_ZmBART.pt
 langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
 SRC=en_XX
@@ -122,48 +119,35 @@ DATADIR=../dataset/postprocess/NHG/en-hi
 SAVEDIR=../checkpoint
 
 python -u train.py ${DATADIR} \
---encoder-normalize-before \
---decoder-normalize-before \
 --arch mbart_large \
 --task translation_from_pretrained_bart \
 --source-lang ${SRC} \
 --target-lang ${TGT} \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.2  \
---dataset-impl mmap \
 --optimizer adam \
 --adam-eps 1e-06 \
---adam-betas '(0.9, 0.98)' \
 --lr-scheduler polynomial_decay \
 --lr 3e-05 \
---min-lr -1 \
 --warmup-updates 2500 \
 --max-update 100000 \
 --dropout 0.3 \
---attention-dropout 0.1  \
---weight-decay 0.0 \
 --max-tokens 2048 \
 --update-freq 2 \
 --save-interval 1 \
 --save-interval-updates 50000 \
 --keep-interval-updates 10 \
 --seed 222 \
---log-format simple \
 --log-interval 100 \
---reset-optimizer \
---reset-meters \
---reset-dataloader \
---reset-lr-scheduler \
 --restore-file $PRETRAIN \
 --langs $langs \
---layernorm-embedding  \
---ddp-backend no_c10d \
 --save-dir ${SAVEDIR} \
 --fp16 \
 --skip-invalid-size-inputs-valid-test \
---no-epoch-checkpoints \
 ```
-### Step-03: Pre-processing HindI evaluation dataset
+After fine-tuning the ZmBART model with the English NHG dataset, we conducted zero-shot evaluation for the Hindi language. The details are as follows:
+
+### Step-04: Pre-processing HindI NHG test data
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_en_train
@@ -189,7 +173,7 @@ python -u preprocess.py \
 --workers 70 \
 --fp16
 ```
-### Step-04: Zero-shot Hindi headline Generation and Evaluation with BLEU, ROUGE and BERTScore
+### Step-05: Zero-shot Generation in Hindi and Evaluation
 ```
 export CUDA_VISIBLE_DEVICES=7
 langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
@@ -221,17 +205,6 @@ python -u generate.py ${DATADIR} \
 grep ^H $PREDICTIONS_DIR/out.txt | cut -f3- > $PREDICTIONS_DIR/en.hyp.txt
 grep ^T $PREDICTIONS_DIR/out.txt | cut -f2- > $PREDICTIONS_DIR/en.ref.txt
 
-### English Language tokenization and Evaluation
-#export CLASSPATH=../stanford-corenlp-4.2.0/stanford-corenlp-4.2.0.jar
-#cat $PREDICTIONS_DIR/en.hyp.txt | java edu.stanford.nlp.process.PTBTokenizer -ioFileList -preserveLines > $PREDICTIONS_DIR/english_hyp.txt
-#cat $PREDICTIONS_DIR/en.ref.txt | java edu.stanford.nlp.process.PTBTokenizer -ioFileList -preserveLines > $PREDICTIONS_DIR/english_ref.txt
-#wc -l $PREDICTIONS_DIR/english_hyp.txt
-#wc -l $PREDICTIONS_DIR/english_ref.txt
-#sacrebleu -tok 'none' -s 'none' $PREDICTIONS_DIR/english_ref.txt < $PREDICTIONS_DIR/english_hyp.txt
-#python rouge_test.py $PREDICTIONS_DIR/english_hyp.txt $PREDICTIONS_DIR/english_ref.txt
-#bert-score -r $PREDICTIONS_DIR/english_ref.txt -c $PREDICTIONS_DIR/english_hyp.txt --lang en
-
-
 ### Hindi Language Tokenization and Evaluation
 python hindi_tok.py $PREDICTIONS_DIR/en.ref.txt $PREDICTIONS_DIR/en.hyp.txt
 wc -l $PREDICTIONS_DIR/hindi_hyp.txt
@@ -239,20 +212,15 @@ wc -l $PREDICTIONS_DIR/hindi_ref.txt
 sacrebleu -tok 'none' -s 'none' $PREDICTIONS_DIR/hindi_ref.txt < $PREDICTIONS_DIR/hindi_hyp.txt
 python rouge_test.py $PREDICTIONS_DIR/hindi_hyp.txt $PREDICTIONS_DIR/hindi_ref.txt
 bert-score -r $PREDICTIONS_DIR/hindi_ref.txt -c $PREDICTIONS_DIR/hindi_hyp.txt --lang hi
-
-### Japanese Language Tokenization and Evaluation
-#kytea < $PREDICTIONS_DIR/en.hyp.txt > $PREDICTIONS_DIR/japanese_hyp.txt
-#kytea < $PREDICTIONS_DIR/en.ref.txt > $PREDICTIONS_DIR/japanese_ref.txt
-#wc -l $PREDICTIONS_DIR/japanese_hyp.txt
-#wc -l $PREDICTIONS_DIR/japanese_ref.txt
-#sacrebleu -tok 'none' -s 'none' $PREDICTIONS_DIR/japanese_ref.txt < $PREDICTIONS_DIR/japanese_hyp.txt
-#python rouge_test.py $PREDICTIONS_DIR/japanese_hyp.txt $PREDICTIONS_DIR/japanese_ref.txt
-#bert-score -r $PREDICTIONS_DIR/japanese_ref.txt -c $PREDICTIONS_DIR/japanese_hyp.txt --lang ja
 ```
-## Fine-Tuning ZmBART checkpoint for Few-shot Hindi News Headline Generation
-Step-01 and step-02 are similar to the Zero-shot settting. 
 
-### Step-03: Pre-processing HindI training, validation and evaluation dataset
+### Few-shot training for News Headline Generation task in Hindi Language
+Step-01 to Step-03 are similar to the Zero-shot setting. 
+
+### Few-shot training for News Headline Generation task in Hindi Language
+Step-01 to Step-03 are similar to the Zero-shot setting.
+
+### Step-04: Pre-processing Hindi training, validation, and test dataset
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_hi_train
@@ -278,7 +246,7 @@ python -u preprocess.py \
 --workers 70 \
 --fp16
 ```
-### Step-04: Do few-shot Training
+### Step-05: Do few-shot fine-tuning
 ```
 export CUDA_VISIBLE_DEVICES=4,5,6,7
 PRETRAIN=../checkpoint/checkpoint_best.pt
@@ -290,50 +258,34 @@ DATADIR=../dataset/postprocess/NHG/en-hi
 SAVEDIR=../checkpoint
 
 python -u train.py ${DATADIR} \
---encoder-normalize-before \
---decoder-normalize-before \
 --arch mbart_large \
 --task translation_from_pretrained_bart \
 --source-lang ${SRC} \
 --target-lang ${TGT} \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.2  \
---dataset-impl mmap \
 --optimizer adam \
 --adam-eps 1e-06 \
---adam-betas '(0.9, 0.98)' \
 --lr-scheduler polynomial_decay \
 --lr 3e-05 \
---min-lr -1 \
 --warmup-updates 2500 \
 --max-update 100000 \
 --dropout 0.3 \
---attention-dropout 0.1  \
---weight-decay 0.0 \
 --max-tokens 2048 \
 --update-freq 2 \
---save-interval 50 \
+--save-interval 1 \
 --save-interval-updates 50000 \
 --keep-interval-updates 10 \
 --seed 222 \
---log-format simple \
 --log-interval 100 \
---reset-optimizer \
---reset-meters \
---reset-dataloader \
---reset-lr-scheduler \
 --restore-file $PRETRAIN \
 --langs $langs \
---layernorm-embedding  \
---ddp-backend no_c10d \
 --save-dir ${SAVEDIR} \
 --fp16 \
 --skip-invalid-size-inputs-valid-test \
---no-epoch-checkpoints \
 ```
-### Step-05: Few-shot Hindi headline Generation and Evaluation with BLEU, ROUGE and BERTScore
+### Step-06: Few-shot Generation in Hindi and Evaluation
 ```
-export CUDA_VISIBLE_DEVICES=7
 langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
 SRC=en_XX
 TGT=hi_IN
@@ -363,17 +315,6 @@ python -u generate.py ${DATADIR} \
 grep ^H $PREDICTIONS_DIR/out.txt | cut -f3- > $PREDICTIONS_DIR/en.hyp.txt
 grep ^T $PREDICTIONS_DIR/out.txt | cut -f2- > $PREDICTIONS_DIR/en.ref.txt
 
-### English Language tokenization and Evaluation
-#export CLASSPATH=../stanford-corenlp-4.2.0/stanford-corenlp-4.2.0.jar
-#cat $PREDICTIONS_DIR/en.hyp.txt | java edu.stanford.nlp.process.PTBTokenizer -ioFileList -preserveLines > $PREDICTIONS_DIR/english_hyp.txt
-#cat $PREDICTIONS_DIR/en.ref.txt | java edu.stanford.nlp.process.PTBTokenizer -ioFileList -preserveLines > $PREDICTIONS_DIR/english_ref.txt
-#wc -l $PREDICTIONS_DIR/english_hyp.txt
-#wc -l $PREDICTIONS_DIR/english_ref.txt
-#sacrebleu -tok 'none' -s 'none' $PREDICTIONS_DIR/english_ref.txt < $PREDICTIONS_DIR/english_hyp.txt
-#python rouge_test.py $PREDICTIONS_DIR/english_hyp.txt $PREDICTIONS_DIR/english_ref.txt
-#bert-score -r $PREDICTIONS_DIR/english_ref.txt -c $PREDICTIONS_DIR/english_hyp.txt --lang en
-
-
 ### Hindi Language Tokenization and Evaluation
 python hindi_tok.py $PREDICTIONS_DIR/en.ref.txt $PREDICTIONS_DIR/en.hyp.txt
 wc -l $PREDICTIONS_DIR/hindi_hyp.txt
@@ -382,14 +323,6 @@ sacrebleu -tok 'none' -s 'none' $PREDICTIONS_DIR/hindi_ref.txt < $PREDICTIONS_DI
 python rouge_test.py $PREDICTIONS_DIR/hindi_hyp.txt $PREDICTIONS_DIR/hindi_ref.txt
 bert-score -r $PREDICTIONS_DIR/hindi_ref.txt -c $PREDICTIONS_DIR/hindi_hyp.txt --lang hi
 
-### Japanese Language Tokenization and Evaluation
-#kytea < $PREDICTIONS_DIR/en.hyp.txt > $PREDICTIONS_DIR/japanese_hyp.txt
-#kytea < $PREDICTIONS_DIR/en.ref.txt > $PREDICTIONS_DIR/japanese_ref.txt
-#wc -l $PREDICTIONS_DIR/japanese_hyp.txt
-#wc -l $PREDICTIONS_DIR/japanese_ref.txt
-#sacrebleu -tok 'none' -s 'none' $PREDICTIONS_DIR/japanese_ref.txt < $PREDICTIONS_DIR/japanese_hyp.txt
-#python rouge_test.py $PREDICTIONS_DIR/japanese_hyp.txt $PREDICTIONS_DIR/japanese_ref.txt
-#bert-score -r $PREDICTIONS_DIR/japanese_ref.txt -c $PREDICTIONS_DIR/japanese_hyp.txt --lang ja
 ```
 # License
 
