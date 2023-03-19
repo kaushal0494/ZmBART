@@ -22,7 +22,7 @@ We have tested the code with ```Python=3.7``` and```PyTorch==1.8```
 
 Please install SentencePiece (SPM) from [here](https://github.com/google/sentencepiece). Make sure the binary is located at `/usr/local/bin/spm_encode`.
 
-## Downloads and Setup
+## Other Setups
 
 - The ZmBART checkpoint can be downloaded from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE) and should be extracted to the `ZmBART/checkpoints/` directory.
 - The mBART.CC25 checkpoint can be downloaded and extracted to the `ZmBART/` directory using the following commands:
