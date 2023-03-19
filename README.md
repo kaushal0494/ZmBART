@@ -38,7 +38,7 @@ tar -xzvf mbart.CC25.tar.gz
 
 ## Training and Generation
 
-### Step-01: ZmBART Checkpoint
+### Step-1: ZmBART Checkpoint
 To create the training dataset for the auxiliary task, use the `denoising_Script.ipynb` script. Fine-tune the mBART model with the auxiliary training dataset to obtain the ZmBART checkpoint as follows:
 
 ```
@@ -81,7 +81,7 @@ Here, we use dummy source and target languages as `en` and `hi`. However, in our
 
 In the rest of this section, we will show the modeling pipeline to fine-tune ZmBART for the New Headline Generation (NHG) task and generate headlines in low-resource languages.
 
-### Step-02: Binarization of NHG English training data
+### Step-2: Binarization of NHG English training data
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_en_train
@@ -107,7 +107,7 @@ python -u preprocess.py \
 --workers 70 \
 --fp16
 ```
-### Step-03: Fine-tuning of ZmBART
+### Step-3: Fine-tuning of ZmBART
 
 ```
 PRETRAIN=../checkpoint/checkpoint_ZmBART.pt
@@ -147,7 +147,7 @@ python -u train.py ${DATADIR} \
 ```
 After fine-tuning the ZmBART model with the English NHG dataset, we conducted zero-shot evaluation for the Hindi language. The details are as follows:
 
-### Step-04: Binarization of HindI NHG test data
+### Step-4: Binarization of HindI NHG test data
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_en_train
@@ -173,7 +173,7 @@ python -u preprocess.py \
 --workers 70 \
 --fp16
 ```
-### Step-05: Zero-shot Generation in Hindi and Evaluation
+### Step-5: Zero-shot Generation in Hindi and Evaluation
 ```
 export CUDA_VISIBLE_DEVICES=7
 langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
@@ -217,7 +217,7 @@ bert-score -r $PREDICTIONS_DIR/hindi_ref.txt -c $PREDICTIONS_DIR/hindi_hyp.txt -
 ### Few-shot training for News Headline Generation task in Hindi Language
 Step-01 to Step-03 are similar to the Zero-shot setting. 
 
-### Step-04: Binarization of Hindi training, validation, and test dataset
+### Step-4: Binarization of Hindi training, validation, and test dataset
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_hi_train
@@ -243,7 +243,7 @@ python -u preprocess.py \
 --workers 70 \
 --fp16
 ```
-### Step-05: Few-shot fine-tuning for Hindi Language
+### Step-5: Few-shot fine-tuning for Hindi Language
 ```
 export CUDA_VISIBLE_DEVICES=4,5,6,7
 PRETRAIN=../checkpoint/checkpoint_best.pt
@@ -281,7 +281,7 @@ python -u train.py ${DATADIR} \
 --fp16 \
 --skip-invalid-size-inputs-valid-test \
 ```
-### Step-06: Few-shot Generation in Hindi and Evaluation
+### Step-6: Few-shot Generation in Hindi and Evaluation
 ```
 langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
 SRC=en_XX
