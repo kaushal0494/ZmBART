@@ -7,7 +7,7 @@
 [![others](https://img.shields.io/badge/PyTorch-Stable%20(1.8.0)-orange)](https://pytorch.org/)
 
 ## Sample Generation from ZmBART
-![](https://github.com/kaushal0494/ZmBART/blob/main/sample_zmbart.png)
+![](https://github.com/kaushal0494/ZmBART/blob/main/sample1.png)
 
 ## About
 This repository contains the source code of the paper titled [ZmBART: An Unsupervised Cross-lingual Transfer Framework for
