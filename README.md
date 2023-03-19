@@ -147,7 +147,7 @@ python -u train.py ${DATADIR} \
 ```
 After fine-tuning the ZmBART model with the English NHG dataset, we conducted zero-shot evaluation for the Hindi language. The details are as follows:
 
-### Step-04: Pre-processing HindI NHG test data
+### Step-04: Binarization of HindI NHG test data
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_en_train
@@ -220,7 +220,7 @@ Step-01 to Step-03 are similar to the Zero-shot setting.
 ### Few-shot training for News Headline Generation task in Hindi Language
 Step-01 to Step-03 are similar to the Zero-shot setting.
 
-### Step-04: Pre-processing Hindi training, validation, and test dataset
+### Step-04: Binarization of Hindi training, validation, and test dataset
 ```
 DATA=../dataset/preprocess/NHG
 TRAIN=nhg_hi_train
@@ -246,7 +246,7 @@ python -u preprocess.py \
 --workers 70 \
 --fp16
 ```
-### Step-05: Do few-shot fine-tuning
+### Step-05: Few-shot fine-tuning for Hindi Language
 ```
 export CUDA_VISIBLE_DEVICES=4,5,6,7
 PRETRAIN=../checkpoint/checkpoint_best.pt
