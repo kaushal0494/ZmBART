@@ -217,9 +217,6 @@ bert-score -r $PREDICTIONS_DIR/hindi_ref.txt -c $PREDICTIONS_DIR/hindi_hyp.txt -
 ### Few-shot training for News Headline Generation task in Hindi Language
 Step-01 to Step-03 are similar to the Zero-shot setting. 
 
-### Few-shot training for News Headline Generation task in Hindi Language
-Step-01 to Step-03 are similar to the Zero-shot setting.
-
 ### Step-04: Binarization of Hindi training, validation, and test dataset
 ```
 DATA=../dataset/preprocess/NHG
