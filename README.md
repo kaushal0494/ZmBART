@@ -36,7 +36,7 @@ tar -xzvf mbart.CC25.tar.gz
 - For ATS task, we did joint multilingual training (see the paper for more details), so 500 monolingual datasets are augmented.
 
 ## Fine-Tuning ZmBART checkpoint for Zero-shot Hindi News Headline Generation
-All the scripts to run pre-processing, training, and generation are available at ```ZmBART/fairseq_cli/``` location
+All the scripts to run pre-processing, training, and generation are available at `ZmBART/fairseq_cli/`
 ### Step-01: Pre-process the data for binarization NHG English dataset
 ```
 DATA=../dataset/preprocess/NHG
