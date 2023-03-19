@@ -11,16 +11,16 @@ Language Generation](https://aclanthology.org/2021.findings-acl.248/) which has 
 All necessary downloads are available at [this link](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE).
 
 
-## Installation Instruction
-All the dependencies can be installed with the below conda command.
+## Installation Instructions
+To install all the dependencies, please run the following conda command:
 
 ``` 
 conda env create --file environment.yml
 conda activate py37_ZmBART
 ``` 
-We tested the code with ```Python=3.7``` and```PyTorch==1.8```
+We have tested the code with ```Python=3.7``` and```PyTorch==1.8```
 
-Install the sentence-piece (SPM) from [here](https://github.com/google/sentencepiece). The binary should be in ```/usr/local/bin/spm_encode```
+Please install SentencePiece (SPM) from [here](https://github.com/google/sentencepiece). Make sure the binary is located at `/usr/local/bin/spm_encode`.
 
 ## Downloads
 
