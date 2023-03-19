@@ -1,5 +1,7 @@
 
 # ZmBART: An Unsupervised Cross-lingual Transfer Framework for Language Generation
+![](https://github.com/kaushal0494/ZmBART/blob/main/ZmBART.png)
+
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/Arko98/Hostility-Detection-in-Hindi-Constraint-2021/blob/main/LICENSE)
 [![others](https://img.shields.io/badge/Huggingface-Cuda%2011.1.0-brightgreen)](https://huggingface.co/)
 [![others](https://img.shields.io/badge/PyTorch-Stable%20(1.8.0)-orange)](https://pytorch.org/)
