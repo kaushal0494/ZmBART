@@ -22,19 +22,18 @@ We have tested the code with ```Python=3.7``` and```PyTorch==1.8```
 
 Please install SentencePiece (SPM) from [here](https://github.com/google/sentencepiece). Make sure the binary is located at `/usr/local/bin/spm_encode`.
 
-## Downloads
+## Downloads and Setup
 
-- Download the ZmBART chekpoint from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE) and extract at ```ZmBART/checkpoints/``` location
-- Also, download mBART.CC25 checkpoint and extract to ```ZmBART/``` by using below commands
+- The ZmBART checkpoint can be downloaded from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE) and should be extracted to the `ZmBART/checkpoints/` directory.
+- The mBART.CC25 checkpoint can be downloaded and extracted to the `ZmBART/` directory using the following commands:
 ```
 wget https://dl.fbaipublicfiles.com/fairseq/models/mbart/mbart.CC25.tar.gz
 tar -xzvf mbart.CC25.tar.gz
 ```
-- The raw training, validation and evaluation dataset for English, Hindi, and Japanese can be downloaded from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE). The model will need an SPM tokenized dataset as input. The raw dataset should be converted into SPM token dataset with instruction provided [here](https://github.com/pytorch/fairseq/blob/master/examples/mbart/README.md#bpe-data-1), and [here](https://tmramalho.github.io/science/2020/06/10/fine-tune-neural-translation-models-with-mBART/) or can be directly downloaded in next point pre-processed by us.  
-- The SPM tokenized training, validation and evaluation dataset for English, Hindi and Japanese can be downloaded from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE).
-- Extract the SPM tokenized datasets at ```ZmBART/dataset/preprocess/``` 
-- Note that we added a training and validation dataset for Hindi and Japanese for few-shot training. Validation data is optional.
-- For ATS, we did joint multilingual training (see the paper for more details), so 500 monolingual datasets are augmented.
+- The raw training, validation, and evaluation datasets for English, Hindi, and Japanese can be downloaded from  [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE). The model also requires an SPM tokenized as input. Instructions for converting the raw dataset to an SPM tokenized dataset can be found [here](https://github.com/pytorch/fairseq/blob/master/examples/mbart/README.md#bpe-data-1) and [here](https://tmramalho.github.io/science/2020/06/10/fine-tune-neural-translation-models-with-mBART/), or you can directly download the preprocessed datasets that we used in the next point. 
+-The SPM tokenized training, validation, and evaluation datasets for English, Hindi, and Japanese can be downloaded from [here](https://iith-my.sharepoint.com/:f:/g/personal/cs18resch11003_iith_ac_in/Ekd6gIoVrzlBgpsFzPvzMyEBN0CdUU_F_e49333pr6dZqg?e=KTGDmE). These should be extracted to the `ZmBART/dataset/preprocess/` directory.
+- Note that we added a training and validation dataset for Hindi and Japanese for few-shot training. The validation data is optional.
+- For ATS task, we did joint multilingual training (see the paper for more details), so 500 monolingual datasets are augmented.
 
 ## Fine-Tuning ZmBART checkpoint for Zero-shot Hindi News Headline Generation
 All the scripts to run pre-processing, training, and generation are available at ```ZmBART/fairseq_cli/``` location
